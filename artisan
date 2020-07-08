@@ -12,7 +12,7 @@ $configPath = implode(DSEP, [__DIR__, 'config']);
 $config = require_once $configPath . DSEP . 'plugin_core.php';
 
 if ($config === null) {
-    throw new Exception("Nenhum arquivo de configuração válido foi encontrado em {$configPath}. Ele deve possuir os parâmetros 'plugin_namespace' e 'laravel_path'");
+    throw new Exception("Nenhum arquivo de configuração válido foi encontrado em {$configPath}. Ele deve possuir os parâmetros 'plugin_name' e 'laravel_path'");
 }
 
 if (isset($config['laravel_path']) === false) {
@@ -47,7 +47,7 @@ class Application extends Illuminate\Foundation\Application
 $app = new \Application(
     $_ENV['APP_BASE_PATH'] ?? __DIR__ . '/vendor/laravel/laravel'
 );
-$app->usePluginNamespace("App\\Plugin\\{$config['plugin_namespace']}\\");
+$app->usePluginNamespace("App\\Plugin\\{$config['plugin_name']}\\");
 $app->useAppPath(__DIR__ . '/app');
 $app->useDatabasePath(__DIR__ . '/database');
 $app->useStoragePath($config['laravel_path'] . '/storage');
@@ -70,7 +70,7 @@ $kernel->bootstrap();
 
 // Registra os novos ServiceProviders usados neste plugin
 $app->register(App\Plugin\Core\Providers\ServiceProvider::class);
-$app->register("App\\Plugin\\{$config['plugin_namespace']}\\Providers\\ServiceProvider");
+$app->register("App\\Plugin\\{$config['plugin_name']}\\Providers\\ServiceProvider");
 
 $status = $kernel->handle(
     $input = new Symfony\Component\Console\Input\ArgvInput,
