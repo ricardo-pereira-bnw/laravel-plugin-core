@@ -252,6 +252,14 @@ Package operations: 3 installs, 0 updates, 0 removals
 - Installing bnw/meu-plugin (dev-master): Mirroring from ../meu-plugin
 ```
 
+Por fim, publique os assets do painel administrativo:
+
+```bash
+php artisan vendor:publish --tag="core-config"
+php artisan vendor:publish --tag="core-assets"
+php artisan vendor:publish --tag="core-theme"
+```
+
 Após a instalação, acesse seu plugin e execute o comando dumpautoload do composer para sincronizar seu plugin com a nova instalação do Laravel:
 
  ```bash
