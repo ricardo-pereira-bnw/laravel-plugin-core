@@ -162,6 +162,14 @@ export default class PagesHandler {
       });
   }
 
+  urlPath() {
+    return this.app.current_url
+  }
+
+  urlNodes() {
+    return this.app.current_url.match(/[^/]+/g)
+  }
+
   applyMetaData(meta){
 
     // Aplica os assets do tema no DOM

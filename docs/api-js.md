@@ -121,6 +121,16 @@ Carrega a página inicial definida para o sistema. Para mias informações sobre
 Carrega uma página .vue existente na rota especificada. 
 Ex: '/example/pagina'
 
+## app.pages().urlPath() 
+
+Devolve uma string contendo o caminho atual da url
+Ex: '/example/pagina/3'
+
+## app.pages().urlNodes() 
+
+Devolve um array contendo os nós do caminho atual da url
+Ex: ['example', 'pagina', '3']
+
 
 ## app.assets() 
 

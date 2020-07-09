@@ -29,12 +29,6 @@ window.app = new Vue({
     request() {
       return axios;
     },
-    urlPath(){
-      return this.current_url
-    },
-    urlNodes(){
-      return this.current_url.match(/[^/]+/g)
-    },
     panel() {
       return new PanelHandler(this);
     },

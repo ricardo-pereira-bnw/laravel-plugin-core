@@ -67069,12 +67069,6 @@ window.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     request: function request() {
       return axios__WEBPACK_IMPORTED_MODULE_5___default.a;
     },
-    urlPath: function urlPath() {
-      return this.current_url;
-    },
-    urlNodes: function urlNodes() {
-      return this.current_url.match(/[^/]+/g);
-    },
     panel: function panel() {
       return new _panel_handler_js__WEBPACK_IMPORTED_MODULE_2__["default"](this);
     },
@@ -68141,6 +68135,16 @@ var PagesHandler = /*#__PURE__*/function () {
       }).then(function () {
         app.panel().loadingEnd();
       });
+    }
+  }, {
+    key: "urlPath",
+    value: function urlPath() {
+      return this.app.current_url;
+    }
+  }, {
+    key: "urlNodes",
+    value: function urlNodes() {
+      return this.app.current_url.match(/[^/]+/g);
     }
   }, {
     key: "applyMetaData",
