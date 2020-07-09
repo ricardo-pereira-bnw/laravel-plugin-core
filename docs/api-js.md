@@ -32,7 +32,7 @@ A API Javascript pode ser acessada dentro das páginas .vue dinâmicas:
 </script>
 ```
 
-## app.assets() 
+## # app.assets() 
 
 Este método devolve o gerenciador de scripts e styles. As funcionalidades disponíveis são:
 
@@ -44,7 +44,7 @@ Adiciona no DOM uma tag script apontando para um arquivo javascript externo. Ess
 
 Adiciona no DOM uma tag link apontando para um arquivo de estilos css externo. Esse link estará em vigor apenas no contexto da página atual. Ao carregar uma nova página, um novo escopo será executado.
 
-## app.pages() 
+## # app.pages() 
 
 Este método devolve o gerenciador do páginas .vue. As funcionalidades disponíveis são:
 
@@ -55,6 +55,7 @@ Carrega a página inicial definida para o sistema. Para mias informações sobre
 ### - app.pages().fetchPage(route)
 
 Carrega uma página .vue existente na rota especificada. 
+
 Ex: '/example/pagina'
 
 ### - app.pages().setPageTitle(title)
@@ -88,18 +89,20 @@ app.pages().setBreadcrumbItems({
 
 ```
 
-## app.pages().urlNodes() 
+### - app.pages().urlNodes() 
 
 Devolve um array contendo os nós do caminho atual da url
+
 Ex: ['example', 'pagina', '3']
 
-## app.pages().urlPath() 
+### - app.pages().urlPath() 
 
 Devolve uma string contendo o caminho atual da url
+
 Ex: '/example/pagina/3'
 
 
-## app.panel() 
+## # app.panel() 
 
 Este método devolve o gerenciador do painel administrativo. As funcionalidades disponíveis são:
 
@@ -164,7 +167,7 @@ Exibe uma janela modal com uma mensagem de notificação simples.
 Dispara uma caixa de mensagem em forma de pilha no topo direito do painel.
 Os mesmos parâmetros de configuração podem ser conferidos em [BootstrapVue Components Toast](https://bootstrap-vue.org/docs/components/toast).
 
-## app.request() 
+## # app.request() 
 
 Este método devolve a instancia da biblioteca [Axios](https://github.com/axios/axios), utilizada para chamadas AJAX dentro do sistema.
 
