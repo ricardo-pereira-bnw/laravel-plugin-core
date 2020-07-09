@@ -6,23 +6,21 @@
       <slot name="admin-header"></slot>
     </header>
         
-    <b-overlay valiant="transparent" :show="loading" rounded="sm">
-
-      <div class="container-fluid bg-light">
-        <div class="row">
-          <div id="apanel-sidebar-left" class="align-self-stretch col-sm p-0 bg-secondary" v-show="lsidebar_enable">
-            <div class="list-group list-group-flush d-none d-sm-block">
-              <slot name="sidebar-left"></slot>
-            </div>
-          </div>
-
-          <div id="apanel-page" class="col-sm p-0">
-            <slot name="admin-page"></slot>
+    <div class="container-fluid bg-light">
+      <div class="row">
+        <div id="apanel-sidebar-left" class="align-self-stretch col-sm p-0 bg-secondary" v-show="lsidebar_enable">
+          <div class="list-group list-group-flush d-none d-sm-block">
+            <slot name="sidebar-left"></slot>
           </div>
         </div>
-      </div>
 
-    </b-overlay>
+        <div id="apanel-page" class="col-sm p-0">
+          <b-overlay valiant="transparent" :show="loading" rounded="sm">
+            <slot name="admin-page"></slot>
+          </b-overlay>
+        </div>
+      </div>
+    </div>
 
     <footer id="apanel-footer">
       <slot name="admin-footer"></slot>

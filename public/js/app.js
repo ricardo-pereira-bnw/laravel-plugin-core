@@ -1950,8 +1950,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -48199,49 +48197,55 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c(
-        "b-overlay",
-        { attrs: { valiant: "transparent", show: _vm.loading, rounded: "sm" } },
-        [
-          _c("div", { staticClass: "container-fluid bg-light" }, [
-            _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "container-fluid bg-light" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.lsidebar_enable,
+                  expression: "lsidebar_enable"
+                }
+              ],
+              staticClass: "align-self-stretch col-sm p-0 bg-secondary",
+              attrs: { id: "apanel-sidebar-left" }
+            },
+            [
               _c(
                 "div",
                 {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.lsidebar_enable,
-                      expression: "lsidebar_enable"
-                    }
-                  ],
-                  staticClass: "align-self-stretch col-sm p-0 bg-secondary",
-                  attrs: { id: "apanel-sidebar-left" }
+                  staticClass: "list-group list-group-flush d-none d-sm-block"
                 },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "list-group list-group-flush d-none d-sm-block"
-                    },
-                    [_vm._t("sidebar-left")],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
+                [_vm._t("sidebar-left")],
+                2
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-sm p-0", attrs: { id: "apanel-page" } },
+            [
               _c(
-                "div",
-                { staticClass: "col-sm p-0", attrs: { id: "apanel-page" } },
+                "b-overlay",
+                {
+                  attrs: {
+                    valiant: "transparent",
+                    show: _vm.loading,
+                    rounded: "sm"
+                  }
+                },
                 [_vm._t("admin-page")],
                 2
               )
-            ])
-          ])
-        ]
-      ),
+            ],
+            1
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "footer",
