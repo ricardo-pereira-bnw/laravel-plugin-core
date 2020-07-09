@@ -68,7 +68,7 @@
             "App\\Plugin\\Core\\Libraries\\Composer\\Scripts::preAutoloadDump"
         ],
         "test": [
-            "composer dumpautoload --ansi; vendor/bin/phpunit"
+            "vendor/bin/phpunit"
         ],
         "watch": [
             "while inotifywait --exclude='.git' -e 'modify' -e 'create' -e 'delete' -r -q ./; do composer dumpautoload; done"
