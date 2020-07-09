@@ -7,7 +7,7 @@ Existem duas maneiras de instalar o pacote `bnw/laravel-plugin-core`:
 
 ## Instalando como um plugin isolado
 
-Para essa modalidade, os recursos ficarão disponiveis dentro de um plugin isolado sob o contexto de uma pacote do composer.
+Para essa modalidade, os recursos ficarão disponíveis dentro de um plugin isolado sob o contexto de uma pacote do composer.
 O mecanismo utiliza o Laravel como dependência e possibilita o desenvolvimento modular.
 
 É como se o desenvolvedor estivesse dentro do Laravel, mas na verdade está em um pacote totalmente separado.
@@ -35,7 +35,34 @@ cd meu-plugin
 O pacote de exemplo vem com o nome 'Example'. Isso deve ser mudado pelo
 nome do seu plugin. Para esse exemplo vamos usar o nome 'MeuPlugin':
 
-### 3.1. composer.json
+### 3.1. Arquivo de configuração
+
+No pacote de exemplo, o arquivo de configuração se chama `config/plugin_example.php`, 
+vamos mudar isso:
+
+```shell
+mv config/plugin_example.php config/plugin_meu_plugin.php
+```
+
+> OBS: o nome do arquivo de configuração é procurado pelo mecanismo de plugins sob o formato de 'plugin_?????', transformando palavras compostas como "MeuPlugin" para um nome correspondente no formato snake_case. Assim, `MeuPlugin` se tornará `meu_plugin`, onde o nome do arquivo de configuração deverá ser `plugin_meu_plugin.php`.
+
+Dentro do arquivo de configuração, mude o nome do pacote adequadamente.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+return [
+
+    'plugin_name' => 'MeuPlugin',
+```
+
+> Obs: aqui é necessário apenas o nome do pacote, ou seja, `MeuPlugin` pois o mecanismo de plugins irá adicionar automaticamente o prefixo `App\Plugin`:
+
+Não se importe com o parâmetro `laravel_path` agora, pois vamos falar dele mais tarde em [Desenvolvendo um plugin de forma isolada](plugin.md).
+
+### 3.2. composer.json
 
 No arquivo do composer, atualize as seguintes informações:
 
@@ -84,33 +111,6 @@ Por fim, no script `pre-autoload-dump`, será necessário setar o nome do arquiv
 
 Mais informações sobre a utilidade deste script pode ser lida em [Desenvolvendo um plugin de forma isolada](plugin.md).
 
-### 3.2. Arquivo de configuração
-
-No pacote de exemplo, o arquivo de configuração se chama `config/plugin_example.php`, 
-vamos mudar isso:
-
-```shell
-mv config/plugin_example.php config/plugin_meu_plugin.php
-```
-
-> OBS: o nome do arquivo de configuração é procurado pelo mecanismo de plugins sob o formato de 'plugin_?????', transformando palavras compostas como "MeuPlugin" para um nome correspondente no formato snake_case. Assim, `MeuPlugin` se tornará `meu_plugin`, onde o nome do arquivo de configuração deverá ser `plugin_meu_plugin.php`.
-
-Dentro do arquivo de configuração, mude o nome do pacote adequadamente.
-
-```php
-<?php
-
-declare(strict_types=1);
-
-return [
-
-    'plugin_name' => 'MeuPlugin',
-```
-
-> Obs: aqui é necessário apenas o nome do pacote, ou seja, `MeuPlugin` pois o mecanismo de plugins irá adicionar automaticamente o prefixo `App\Plugin`:
-
-Não se importe com o parâmetro `laravel_path` agora, pois vamos falar dele mais tarde em [Desenvolvendo um plugin de forma isolada](plugin.md).
-
 ### 3.3. O controlador abstrato
 
 No diretório `app/Http/Controllers` existe um controlador abstrato chamado `AController`. Mude o namespace dele para o do seu plugin:
@@ -155,7 +155,7 @@ public function boot()
 
 > OBS 2: o código acima é apenas para demonstrar que é necessário invocar o parent::boot() caso seja necessário adicionar implementações no método boot(). Caso não precise implementar nada, você pode remover o método boot do ServiceProvider.
 
-> OBS 3: note que o ServiceProvider estende `App\Plugin\Core\Providers\PluggableServiceProvider`. Isso porque ele possui vários recursos adicionais para gerenciemnto de plugins.
+> OBS 3: note que o ServiceProvider estende `App\Plugin\Core\Providers\PluggableServiceProvider`. Isso porque ele possui vários recursos adicionais para gerenciamento de plugins.
 
 ### 3.5. Arquivos de exemplo que podem ser removidos
 
