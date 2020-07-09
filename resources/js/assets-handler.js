@@ -71,26 +71,62 @@ export default class AssetsHandler {
     document.body.appendChild(style)
   }
 
+  /**
+   * Remove os estilos aplicados pelo escopo da página anterior 
+   * e aplica os estilos no escopo da nova página.
+   * 
+   * @param {array} styles 
+   */
   applyAppStyles(styles) {
 
     if (styles === undefined) {
       return
     }
 
-    var elements = document.querySelectorAll('.state-class')
-    elements.forEach(item => { item.remove(); })
+    // Cada vez que uma nova página é carregada, o backend envia metadados 
+    // para alterar o comportamento do painel. 
+    // Nesses dados se encontra o tema atualmente em uso!
+    // É preciso identificar se o tema pedido é o mesmo já existente no DOM 
+    // para evitar recarregamentos do mesmo tema e não piscar a tela
 
+    // Mapeia os já existentes no DOM
+    let oldStyles = []
+    document.querySelectorAll('.state-class').forEach(item => { 
+      oldStyles.push(item.getAttribute('href').replace(/\?.*/, ''))
+    })
+
+    // Remove os desnecessários e mantém os já existentes
+    // Para a tela não piscar quando o tema for igual.
+    document.querySelectorAll('.state-class').forEach(item => { 
+
+      let href = item.getAttribute('href').replace(/\?.*/, '')
+      if (styles.includes(href) === false) {
+        item.remove()
+      }
+      
+    })
+
+    // Adiciona novos estilos no DOM
     styles.forEach(href => {
 
-      let style = document.createElement("link")
-      style.setAttribute('rel', 'stylesheet')
-      style.setAttribute('class', 'state-class')
-      style.setAttribute('href', href + '?v=' + (new Date().getTime()))
-      document.head.appendChild(style)
+      if (oldStyles.includes(href) === false) {
+
+        let style = document.createElement("link")
+        style.setAttribute('rel', 'stylesheet')
+        style.setAttribute('class', 'state-class')
+        style.setAttribute('href', href + '?v=' + (new Date().getTime()))
+        document.head.appendChild(style)
+      }
     });
 
   }
 
+  /**
+   * Remove os scripts aplicados pelo escopo da página anterior 
+   * e aplica os scripts no escopo da nova página.
+   * 
+   * @param {array} scripts 
+   */
   applyAppScripts(scripts) {
 
     if (scripts === undefined) {

@@ -26,7 +26,7 @@
 
         <p>
         Para melhorar o entendimento, existe um <a href="https://packagist.org/packages/bnw/laravel-plugin-example" target="_blank">plugin de exemplo</a>, 
-        que você pode instalar facilmente através do comando:
+        que você pode instalar facilmente e vê-lo funcionando no painel:
         </p>
 
         <pre><code>

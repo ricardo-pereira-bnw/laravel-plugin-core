@@ -66965,25 +66965,59 @@ var AssetsHandler = /*#__PURE__*/function () {
       style.setAttribute('type', 'text/css');
       document.body.appendChild(style);
     }
+    /**
+     * Remove os estilos aplicados pelo escopo da página anterior 
+     * e aplica os estilos no escopo da nova página.
+     * 
+     * @param {array} styles 
+     */
+
   }, {
     key: "applyAppStyles",
     value: function applyAppStyles(styles) {
       if (styles === undefined) {
         return;
-      }
+      } // Cada vez que uma nova página é carregada, o backend envia metadados 
+      // para alterar o comportamento do painel. 
+      // Nesses dados se encontra o tema atualmente em uso!
+      // É preciso identificar se o tema pedido é o mesmo já existente no DOM 
+      // para evitar recarregamentos do mesmo tema e não piscar a tela
+      // Mapeia os já existentes no DOM
 
-      var elements = document.querySelectorAll('.state-class');
-      elements.forEach(function (item) {
-        item.remove();
-      });
+
+      var oldStyles = [];
+      document.querySelectorAll('.state-class').forEach(function (item) {
+        oldStyles.push(item.getAttribute('href').replace(/\?.*/, ''));
+      }); // Remove os desnecessários e mantém os já existentes
+      // Para a tela não piscar quando o tema for igual.
+
+      document.querySelectorAll('.state-class').forEach(function (item) {
+        var href = item.getAttribute('href').replace(/\?.*/, '');
+
+        if (styles.includes(href) === false) {
+          item.remove();
+          console.log('removido: ' + href);
+        }
+      }); // Adiciona novos estilos no DOM
+
       styles.forEach(function (href) {
-        var style = document.createElement("link");
-        style.setAttribute('rel', 'stylesheet');
-        style.setAttribute('class', 'state-class');
-        style.setAttribute('href', href + '?v=' + new Date().getTime());
-        document.head.appendChild(style);
+        if (oldStyles.includes(href) === false) {
+          var style = document.createElement("link");
+          style.setAttribute('rel', 'stylesheet');
+          style.setAttribute('class', 'state-class');
+          style.setAttribute('href', href + '?v=' + new Date().getTime());
+          document.head.appendChild(style);
+          console.log('adicionado: ' + href);
+        }
       });
     }
+    /**
+     * Remove os scripts aplicados pelo escopo da página anterior 
+     * e aplica os scripts no escopo da nova página.
+     * 
+     * @param {array} scripts 
+     */
+
   }, {
     key: "applyAppScripts",
     value: function applyAppScripts(scripts) {

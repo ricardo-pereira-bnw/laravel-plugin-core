@@ -451,7 +451,7 @@ class Handler
             $assets['scripts_bottom'] = array_merge($assets['scripts_bottom'], array_values($theme->scriptsBottom()));
             $assets['styles']         = array_merge($assets['styles'], array_values($theme->styles()));
 
-            // Por último, são acrregados os assets do módulo em execução,
+            // Por último, são carregados os assets do módulo em execução,
             // para que seja possível ao módulo modificar algum script ou estilo
             // proveniente do Core ou do Tema
             $module = $this->currentPlugin();
