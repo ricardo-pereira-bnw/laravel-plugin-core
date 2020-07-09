@@ -41,6 +41,10 @@
 
         </component>
 
+        <core-modal-message ref="modal-message"></core-modal-message>
+
+        <core-modal-confirm ref="modal-confirm"></core-modal-confirm>
+
     </div>
 
     <script type="text/javascript" src="/plugins/core/js/app.js?v={{ date('dmHis') }}"></script>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Plugin\Core\Libraries\Plugins\Handler;
+use Illuminate\Http\JsonResponse;
 
 if (function_exists('dummy_core_helpers') === false) {
 
@@ -57,5 +58,21 @@ if (function_exists('dummy_core_helpers') === false) {
             'meta' => Handler::instance()->metadata(),
             'vuefile' => file_get_contents($vueFile . '.vue')
         ];
+    }
+
+    /**
+     * Devolve uma resposta para uma requisição abortada.
+     * 
+     * @param int $httpStatus
+     * @param string $message
+     * @param array $data
+     */
+    function vueAbort(int $httpStatus, string $message = null, array $data = []): JsonResponse
+    {
+        return response()->json([
+            'meta'    => Handler::instance()->metadata(),
+            'message' => $message ?? 'Requisição abortada',
+            'data'    => $data
+        ], $httpStatus);
     }
 }

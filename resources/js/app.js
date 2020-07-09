@@ -20,11 +20,20 @@ Vue.component('core-page-header', require('./components/layout/CorePageHeader.vu
 Vue.component('core-page', require('./components/widgets/CorePageContent.vue').default)
 Vue.component('sidebar-right-content', require('./components/widgets/CoreSidebarRightContent.vue').default)
 
+Vue.component('core-modal-message', require('./components/widgets/CoreModalMessage.vue').default)
+Vue.component('core-modal-confirm', require('./components/widgets/CoreModalConfirm.vue').default)
+
 window.app = new Vue({
   el: '#vue-app',
   methods: {
     request() {
       return axios;
+    },
+    urlPath(){
+      return this.current_url
+    },
+    urlNodes(){
+      return this.current_url.match(/[^/]+/g)
     },
     panel() {
       return new PanelHandler(this);
@@ -34,6 +43,20 @@ window.app = new Vue({
     },
     assets() {
       return new AssetsHandler(this);
+    },
+    message(title, message){
+      this.$refs['modal-message'].title = title
+      this.$refs['modal-message'].message = message
+      this.$refs['modal-message'].$refs['modal-message-widget'].show()
+    },
+    confirm(title, message, callback){
+      this.$refs['modal-confirm'].title = title
+      this.$refs['modal-confirm'].message = message
+      this.$refs['modal-confirm'].callback = callback
+      this.$refs['modal-confirm'].$refs['modal-confirm-widget'].show()
+    },
+    toast(message, params) {
+      this.$bvToast.toast(message, params)
     }
   },
   data: {
@@ -44,7 +67,9 @@ window.app = new Vue({
     msidebar: 'core-sidebar-mobile',
     rsidebar: 'core-sidebar-right',
     pheader: 'core-page-header',
-    page: 'core-page'
+    page: 'core-page',
+
+    current_url: null
   }
 
 });

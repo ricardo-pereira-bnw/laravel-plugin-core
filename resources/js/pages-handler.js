@@ -63,7 +63,8 @@ export default class PagesHandler {
       return
     }
 
-    let app = this.app;
+    let self = this
+    let app = this.app
 
     app.panel().loadingStart();
 
@@ -72,6 +73,8 @@ export default class PagesHandler {
     // faz-se chamadas ajax e posteriormente compila-se o componente
     axios.get(url)
       .then(function (response) {
+
+        app.current_url = url
 
         app.panel().restartSidebarRight()
 
@@ -84,21 +87,7 @@ export default class PagesHandler {
         // ----------------------------------
         // Metadados provenientes do Laravel
         // ----------------------------------
-
-        // Aplica os assets do tema no DOM
-        app.assets().applyAppStyles(response.data.meta.styles)
-        app.assets().applyAppScripts(response.data.meta.scripts)
-
-        // Atualiza os componentes reativos do painel
-        app.panel().changeSidebarLeftStatus(response.data.meta.sidebar_left_status)
-        app.panel().changeSidebarRightStatus(response.data.meta.sidebar_right_status)
-        app.panel().updateSidebarLeftAndMobile(response.data.meta.sidebar_left)
-        app.panel().updateHeaderMenu(response.data.meta.header_menu)
-        app.panel().updateUserData(response.data.meta.user_data)
-
-        // Atualiza as informações da página atual
-        app.pages().setPageTitle(response.data.meta.page_title)
-        app.pages().setBreadcrumbItems(response.data.meta.breadcrumb)
+        self.applyMetaData(response.data.meta)
 
         // ----------------------------------
         // Executa o script para sobrescrever os metadados
@@ -148,14 +137,63 @@ export default class PagesHandler {
 
       })
       .catch(function (error) {
-        app.pages().showError(error)
+
+        if (error.response === undefined) {
+          app.pages().fail('unknown', 'Um erro inesperado aconteceu')
+          return; 
+        }
+
+        let type = 'server_error';
+        switch(error.response.status){
+          case 401: type = 'unauthorized'; break;
+          case 403: type = 'forbidden'; break;
+        }
+
+        app.pages().fail(
+          type, 
+          error.response.data.message, 
+          error.response.data.data,
+          error.response.headers
+        )
+        
       })
       .then(function () {
         app.panel().loadingEnd()
       });
   }
 
-  showError(errorData) {
-    console.log(errorData)
+  applyMetaData(meta){
+
+    // Aplica os assets do tema no DOM
+    app.assets().applyAppStyles(meta.styles)
+    app.assets().applyAppScripts(meta.scripts)
+
+    // Atualiza os componentes reativos do painel
+    app.panel().changeSidebarLeftStatus(meta.sidebar_left_status)
+    app.panel().changeSidebarRightStatus(meta.sidebar_right_status)
+    app.panel().updateSidebarLeftAndMobile(meta.sidebar_left)
+    app.panel().updateHeaderMenu(meta.header_menu)
+    app.panel().updateUserData(meta.user_data)
+
+    // Atualiza as informações da página atual
+    app.pages().setPageTitle(meta.page_title)
+    app.pages().setBreadcrumbItems(meta.breadcrumb)
+}
+
+  fail(type, message, data, headers) {
+
+    data = data ?? []
+    headers = headers ?? []
+
+    if (type === 'unauthorized' ) {
+      this.app.message('Autenticação', message)
+      return;
+    }
+    
+    if (type === 'forbidden' ) {
+      this.app.message('Acesso proibido', message)
+      return;
+    }
+
   }
 }
