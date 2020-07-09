@@ -66996,7 +66996,6 @@ var AssetsHandler = /*#__PURE__*/function () {
 
         if (styles.includes(href) === false) {
           item.remove();
-          console.log('removido: ' + href);
         }
       }); // Adiciona novos estilos no DOM
 
@@ -67007,7 +67006,6 @@ var AssetsHandler = /*#__PURE__*/function () {
           style.setAttribute('class', 'state-class');
           style.setAttribute('href', href + '?v=' + new Date().getTime());
           document.head.appendChild(style);
-          console.log('adicionado: ' + href);
         }
       });
     }
@@ -67025,8 +67023,7 @@ var AssetsHandler = /*#__PURE__*/function () {
         return;
       }
 
-      var elements = document.querySelectorAll('.state-script');
-      elements.forEach(function (item) {
+      document.querySelectorAll('.state-script').forEach(function (item) {
         item.remove();
       });
       scripts.forEach(function (src) {
@@ -67686,6 +67683,18 @@ var PagesHandler = /*#__PURE__*/function () {
   }, {
     key: "fetchPage",
     value: function fetchPage(url) {
+      var pattern = new RegExp('^(https?:\\/\\/)?' + // protocolo
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domínio
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // ip (v4) 
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + //porta
+      '(\\?[;&amp;a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i');
+
+      if (pattern.test(url)) {
+        location.href = url;
+        return;
+      }
+
       var app = this.app;
       app.panel().loadingStart(); // Normalmente o carregamento de módulos seria feito através do webpack.
       // Mas, para prover uma comunicação mais previsível com o Laravel,

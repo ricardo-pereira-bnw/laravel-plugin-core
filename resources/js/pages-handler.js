@@ -49,6 +49,20 @@ export default class PagesHandler {
    */
   fetchPage(url) {
 
+    let pattern = new RegExp(
+      '^(https?:\\/\\/)?'+ // protocolo
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domínio
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // ip (v4) 
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ //porta
+      '(\\?[;&amp;a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'
+    );
+
+    if (pattern.test(url)) {
+      location.href = url
+      return
+    }
+
     let app = this.app;
 
     app.panel().loadingStart();

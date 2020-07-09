@@ -91,18 +91,22 @@ export default class AssetsHandler {
 
     // Mapeia os já existentes no DOM
     let oldStyles = []
-    document.querySelectorAll('.state-class').forEach(item => { 
+    document
+      .querySelectorAll('.state-class')
+      .forEach(item => { 
       oldStyles.push(item.getAttribute('href').replace(/\?.*/, ''))
     })
 
     // Remove os desnecessários e mantém os já existentes
     // Para a tela não piscar quando o tema for igual.
-    document.querySelectorAll('.state-class').forEach(item => { 
+    document
+      .querySelectorAll('.state-class')
+      .forEach(item => { 
 
-      let href = item.getAttribute('href').replace(/\?.*/, '')
-      if (styles.includes(href) === false) {
-        item.remove()
-      }
+        let href = item.getAttribute('href').replace(/\?.*/, '')
+        if (styles.includes(href) === false) {
+          item.remove()
+        }
       
     })
 
@@ -133,8 +137,9 @@ export default class AssetsHandler {
       return
     }
 
-    var elements = document.querySelectorAll('.state-script')
-    elements.forEach(item => { item.remove(); })
+    document
+      .querySelectorAll('.state-script')
+      .forEach(item => { item.remove(); })
 
     scripts.forEach(src => {
 
