@@ -37,20 +37,6 @@ window.app = new Vue({
     },
     assets() {
       return new AssetsHandler(this);
-    },
-    message(title, message){
-      this.$refs['modal-message'].title = title
-      this.$refs['modal-message'].message = message
-      this.$refs['modal-message'].$refs['modal-message-widget'].show()
-    },
-    confirm(title, message, callback){
-      this.$refs['modal-confirm'].title = title
-      this.$refs['modal-confirm'].message = message
-      this.$refs['modal-confirm'].callback = callback
-      this.$refs['modal-confirm'].$refs['modal-confirm-widget'].show()
-    },
-    toast(message, params) {
-      this.$bvToast.toast(message, params)
     }
   },
   data: {

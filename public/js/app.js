@@ -67077,20 +67077,6 @@ window.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     },
     assets: function assets() {
       return new _assets_handler_js__WEBPACK_IMPORTED_MODULE_4__["default"](this);
-    },
-    message: function message(title, _message) {
-      this.$refs['modal-message'].title = title;
-      this.$refs['modal-message'].message = _message;
-      this.$refs['modal-message'].$refs['modal-message-widget'].show();
-    },
-    confirm: function confirm(title, message, callback) {
-      this.$refs['modal-confirm'].title = title;
-      this.$refs['modal-confirm'].message = message;
-      this.$refs['modal-confirm'].callback = callback;
-      this.$refs['modal-confirm'].$refs['modal-confirm-widget'].show();
-    },
-    toast: function toast(message, params) {
-      this.$bvToast.toast(message, params);
     }
   },
   data: {
@@ -68308,6 +68294,26 @@ var PanelHandler = /*#__PURE__*/function () {
     key: "loadingEnd",
     value: function loadingEnd() {
       this.app.$refs.admin.loading = false;
+    }
+  }, {
+    key: "message",
+    value: function message(title, _message) {
+      this.app.$refs['modal-message'].title = title;
+      this.app.$refs['modal-message'].message = _message;
+      this.app.$refs['modal-message'].$refs['modal-message-widget'].show();
+    }
+  }, {
+    key: "confirm",
+    value: function confirm(title, message, callback) {
+      this.app.$refs['modal-confirm'].title = title;
+      this.app.$refs['modal-confirm'].message = message;
+      this.app.$refs['modal-confirm'].callback = callback;
+      this.app.$refs['modal-confirm'].$refs['modal-confirm-widget'].show();
+    }
+  }, {
+    key: "toast",
+    value: function toast(message, params) {
+      this.app.$bvToast.toast(message, params);
     }
   }]);
 

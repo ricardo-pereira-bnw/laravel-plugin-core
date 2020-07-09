@@ -94,4 +94,21 @@ export default class PanelHandler {
     loadingEnd() {
         this.app.$refs.admin.loading = false
     }
+
+    message(title, message){
+        this.app.$refs['modal-message'].title = title
+        this.app.$refs['modal-message'].message = message
+        this.app.$refs['modal-message'].$refs['modal-message-widget'].show()
+      }
+    
+    confirm(title, message, callback) {
+        this.app.$refs['modal-confirm'].title = title
+        this.app.$refs['modal-confirm'].message = message
+        this.app.$refs['modal-confirm'].callback = callback
+        this.app.$refs['modal-confirm'].$refs['modal-confirm-widget'].show()
+    }
+
+    toast(message, params) {
+        this.app.$bvToast.toast(message, params)
+    }
 }
