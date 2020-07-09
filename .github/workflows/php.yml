@@ -14,7 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
+    - name: Pacotes NPM
+      run: npm install
+
+    - name: Validação do composer.json
       run: composer validate
       
     - name: Cache Composer packages
@@ -26,7 +29,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Install dependencies
+    - name: Instalação das dependencias
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
       
