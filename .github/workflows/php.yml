@@ -26,7 +26,7 @@ jobs:
       - name: Setup Laravel
         run: | 
           cd laravel 
-          php -r \"file_exists('.env') || copy('.env.example', '.env')\"
+          php -r "file_exists('.env') || copy('.env.example', '.env')"
           composer install
           php artisan key:generate
           composer config repositories.plugin path ../plugin  
