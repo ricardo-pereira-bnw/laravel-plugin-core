@@ -11,20 +11,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Clona o projeto do laravel
+      # Clona o plugin    
       - uses: actions/checkout@v2
         with:
           repository: 'bueno-networks/laravel-plugin-core'
-          path: ./laravel-plugin-core
-        
-      # Clona o plugin
+          path: ./plugin
+            
+      # Clona o projeto do laravel
       - uses: actions/checkout@v2
         with:
           repository: 'laravel/laravel'
           path: ./laravel
+          run: |
+            composer install
+            php artisan key:generate
+            composer config repositories.plugin path ../plugin  
+            composer require bnw/laravel-plugin-core
           
       - name: Listar Tudo
-        run: ls -la laravel
+        run: ls -la ./ ; ls -la laravel; ls -la plugin
   
   
  
