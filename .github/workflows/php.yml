@@ -22,11 +22,25 @@ jobs:
         with:
           repository: 'laravel/laravel'
           path: ./laravel
-          run: |
-            composer install
-            php artisan key:generate
-            composer config repositories.plugin path ../plugin  
-            composer require bnw/laravel-plugin-core
+          
+      - name: Setup Laravel
+        run: | 
+          cd laravel 
+          composer install
+          php artisan key:generate
+          composer config repositories.plugin path ../plugin  
+          composer require bnw/laravel-plugin-core
+          
+      - name: Setup Plugin
+        run: | 
+          cd laravel 
+          composer install
+          composer test  
+          
+      - name: Run tests
+        run: | 
+          cd plugin
+          composer test  
           
       - name: Listar Tudo
         run: ls -la ./ ; ls -la laravel; ls -la plugin
