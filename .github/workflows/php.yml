@@ -36,16 +36,12 @@ jobs:
           composer install
           php artisan key:generate
           composer config repositories.plugin path ../plugin  
-          cat composer.json
           composer require bnw/laravel-plugin-core:dev-master
           
-      - name: Run tests
+      - name: Run Tests
         run: | 
           cd plugin
-          composer test  
-          
-      - name: Listar Tudo
-        run: ls -la ./ ; ls -la laravel; ls -la plugin
+          composer test
   
   
  
