@@ -26,6 +26,7 @@ jobs:
       - name: Setup Plugin
         run: | 
           cd plugin 
+          npm install
           composer install
           
       - name: Setup Laravel
