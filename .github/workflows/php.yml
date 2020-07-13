@@ -14,8 +14,11 @@ jobs:
         with:
           repository: laravel/laravel
           path: laravel
-      - run: cd laravel
-      - run: composer install
+          run: |
+            composer install
+            php artisan key:generate
+            
+            
       
 
   
