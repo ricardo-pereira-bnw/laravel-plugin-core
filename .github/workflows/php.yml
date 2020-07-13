@@ -11,14 +11,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Clona o plugin    
-      - uses: actions/checkout@v2
+      - name: Clone Laravel    
+        uses: actions/checkout@v2
         with:
           repository: 'bueno-networks/laravel-plugin-core'
           path: ./plugin
             
-      # Clona o projeto do laravel
-      - uses: actions/checkout@v2
+      - name: Clone Plugin
+        uses: actions/checkout@v2
         with:
           repository: 'laravel/laravel'
           path: ./laravel
@@ -26,6 +26,7 @@ jobs:
       - name: Setup Laravel
         run: | 
           cd laravel 
+          php -r \"file_exists('.env') || copy('.env.example', '.env')
           composer install
           php artisan key:generate
           composer config repositories.plugin path ../plugin  
@@ -33,7 +34,7 @@ jobs:
           
       - name: Setup Plugin
         run: | 
-          cd laravel 
+          cd plugin 
           composer install
           composer test  
           
