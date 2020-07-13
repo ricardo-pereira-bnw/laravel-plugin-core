@@ -36,6 +36,7 @@ jobs:
           composer install
           php artisan key:generate
           composer config repositories.plugin path ../plugin  
+          cat composer.json
           composer require bnw/laravel-plugin-core
           
       - name: Run tests
