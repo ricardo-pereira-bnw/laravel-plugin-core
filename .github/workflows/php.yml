@@ -6,44 +6,26 @@ on:
   pull_request:
     branches: [ master ]
 
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+jobs: 
+  test:
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.runs-on }}
+  
     steps:
-    # Instalação do projeto Laravel 
-    - uses: actions/checkout@v2
-      with:
-        repository: laravel/laravel
-        path: laravel
+  
+      # Clona o Laravel
+      - uses: actions/checkout@v2
+        with:
+          repository: laravel/laravel
+          path: laravel
         
-    - name: Dependencias do Laravel
-      run: composer install
-        
-    # Instalação do plugin 
-    - uses: actions/checkout@v2
-      with:
-        path: main
+      # Setup
+      - name: Configura o Laravel
+        uses: ./laravel
+        run: composer install
+  
+  
 
-    - name: Pacotes NPM
-      run: npm install
 
-    - name: Validação do cComposer
-      run: composer validate
-      
-    - name: Cache Composer
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
-    - name: Dependencias do Plugin
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
-      
-    - name: Testes de Unidade
-      run: composer test
