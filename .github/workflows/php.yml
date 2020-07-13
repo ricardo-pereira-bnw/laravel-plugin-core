@@ -11,17 +11,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Laravel    
+      - name: Clone Plugin
         uses: actions/checkout@v2
         with:
           repository: 'bueno-networks/laravel-plugin-core'
           path: ./plugin
-            
-      - name: Clone Plugin
+        
+      - name: Clone Laravel
         uses: actions/checkout@v2
         with:
           repository: 'laravel/laravel'
           path: ./laravel
+          
+      - name: Setup Plugin
+        run: | 
+          cd plugin 
+          composer install
           
       - name: Setup Laravel
         run: | 
@@ -31,12 +36,6 @@ jobs:
           php artisan key:generate
           composer config repositories.plugin path ../plugin  
           composer require bnw/laravel-plugin-core
-          
-      - name: Setup Plugin
-        run: | 
-          cd plugin 
-          composer install
-          composer test  
           
       - name: Run tests
         run: | 
