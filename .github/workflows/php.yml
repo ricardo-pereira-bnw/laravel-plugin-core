@@ -11,17 +11,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Clona o projeto do laravel
       - uses: actions/checkout@v2
         with:
           repository: 'bueno-networks/laravel-plugin-core'
           path: ./laravel-plugin-core
+        
+      # Clona o plugin
       - uses: actions/checkout@v2
         with:
           repository: 'laravel/laravel'
           path: ./laravel
           
       - name: Listar Tudo
-        run: ls -la
+        run: ls -la laravel
   
   
  
