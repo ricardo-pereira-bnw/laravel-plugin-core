@@ -3,7 +3,7 @@
 ![PHP Version](https://img.shields.io/badge/php-%5E7.2.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![TDD](https://img.shields.io/badge/tdd-Tested%20100%25-blue)
-![PHP Composer](https://github.com/bueno-networks/laravel-plugin-core/workflows/PHP%20Composer/badge.svg)
+![PHP Composer](https://github.com/bueno-networks/laravel-plugin-core/workflows/Pipeline%20Plugin/badge.svg)
 
 Este é o mecanismo de plugins, onde se encontram todas as funcionalidades necessárias para o desenvolvimento de aplicações SPA conectadas com o framework Laravel. 
 
