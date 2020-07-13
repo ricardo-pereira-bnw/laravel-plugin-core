@@ -12,9 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Teste one line
-        run: composer create-project laravel/laravel
-      - name: Listar
+        with:
+          repository: 'bueno-networks/laravel-plugin-core'
+          path: ./laravel-plugin-core
+      - uses: actions/checkout@v2
+        with:
+          repository: 'laravel/laravel'
+          path: ./laravel
+          
+      - name: Listar Tudo
         run: ls -la
   
   
