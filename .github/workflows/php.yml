@@ -1,37 +1,59 @@
 name: PHP Composer
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+  push:
+    branches:
+      - master
+      - releases/*
 
-jobs:
+jobs: 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Pacotes NPM
-      run: npm install
-
-    - name: Validação do composer.json
-      run: composer validate
+      - name: Clone Plugin
+        uses: actions/checkout@v2
+        with:
+          repository: 'bueno-networks/laravel-plugin-core'
+          path: ./plugin
+        
+      - name: Clone Laravel
+        uses: actions/checkout@v2
+        with:
+          repository: 'laravel/laravel'
+          path: ./laravel
+          
+      - name: Setup Plugin
+        run: | 
+          cd plugin 
+          npm install
+          composer install
+          
+      - name: Setup Laravel
+        run: | 
+          cd laravel 
+          cp .env.example .env
+          composer install
+          php artisan key:generate
+          composer config repositories.plugin path ../plugin  
+          cat composer.json
+          composer require bnw/laravel-plugin-core:dev-master
+          
+      - name: Run tests
+        run: | 
+          cd plugin
+          composer test  
+          
+      - name: Listar Tudo
+        run: ls -la ./ ; ls -la laravel; ls -la plugin
+  
+  
+ 
+            
+            
       
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
 
-    - name: Instalação das dependencias
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
-      
-    - name: Testes de unidade
-      run: composer test
+  
+  
+
+
