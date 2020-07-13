@@ -1,22 +1,24 @@
 name: PHP Composer
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+  push:
+    branches:
+      - master
+      - releases/*
 
 jobs: 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: laravel/laravel
-          path: laravel
-          run: |
-            composer install
-            php artisan key:generate
+      - name: Teste one line
+      - run: composer create-project laravel/laravel
+      - name: Listar
+        run: ls -la
+  
+  
+ 
             
             
       
