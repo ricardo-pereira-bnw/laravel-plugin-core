@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Teste one line
-      - run: composer create-project laravel/laravel
+        run: composer create-project laravel/laravel
       - name: Listar
         run: ls -la
   
